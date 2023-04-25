@@ -1,0 +1,34 @@
+{% extends  "layout.html" %}
+{%block content%}
+<h5> My Cart</h5>
+<table>
+    <thead>
+      <tr>
+          <th>Dish's Name</th>
+          <th>Amount</th>
+          <th>Price</th>
+          <th>Change Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+        {%for item in cart_items%}
+        <form action="{% url 'show-cart' %}"  method="POST">
+        <input type="hidden" id="dish" name="dish" value="{{item.dish.id}}">
+        {% csrf_token %}
+        <tr>
+            <td>{{item.dish}}</td>
+            <td>{{item.amount}}</td>
+            <td>{{item.price}}$</td>
+            <td><input class="input-group-field" type="number" id="amount" name="amount"  value="1" min="0" style="width: 30px;"><button name="change"  type="submit">Change Quantity</button></td>
+        </form>
+        {%endfor%}
+        </tr>
+    </tbody>
+</table>
+            <input type="hidden" id="sum" name="sum" value="{{sum}}"><h2>The Total Amount Of The Order Is: {{sum}}$ </h2>
+            <button class="btn waves-effect waves-light" ><li><a href="{%url 'order' %}" type="submit" name="order" style="color: black;">Proceed To Order</a></li> </button> 
+{%endblock content%}
+
+
+
+

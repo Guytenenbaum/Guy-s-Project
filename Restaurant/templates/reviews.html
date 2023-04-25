@@ -1,0 +1,61 @@
+{% extends  "layout.html" %}
+{%block content%}
+<title>Customer Reviews - Guy's Dinner</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
+      h1 {
+        text-align: center;
+        margin-top: 50px;
+        font-size: 40px;
+        color:black;
+      }
+      .review {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 50px auto;
+        max-width: 800px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+      }
+      .review p {
+        font-size: 20px;
+        line-height: 1.5;
+        color: #333;
+      }
+      .review .author {
+        font-weight: bold;
+        margin-top: 20px;
+        color: #ff0000;
+      }
+      .review .rating {
+        font-size: 24px;
+        color: #ff0000;
+        margin-top: 10px;
+      }
+    </style>
+</head>
+<body>
+    <h1>Customer Reviews - Guy's Dinner</h1>
+    <div class="review">
+      <p>"I had the pleasure of dining at Guy's Dinner last night and it was amazing! The food was delicious, the service was excellent, and the atmosphere was cozy and inviting. I highly recommend this restaurant to anyone looking for a great dining experience."</p>
+      <p class="author">- Johnny Depp</p>
+      <div class="rating">★★★★★</div>
+    </div>
+    <div class="review">
+      <p>"I can't say enough good things about Guy's Dinner. The food is outstanding, the portions are huge, and the staff is so friendly and welcoming. I would give this restaurant 10 stars if I could!"</p>
+      <p class="author">- Ilana Israeli</p>
+      <div class="rating">★★★★★</div>
+    </div>
+    <div class="review">
+      <p>"I was a little hesitant to try a restaurant with a slogan like 'where heart attacks are created,' but I'm so glad I did. The food at Guy's Dinner is absolutely delicious and worth every calorie. Plus, the staff is so friendly and helpful. I will definitely be back!"</p>
+      <p class="author">-Nadav Modai</p>
+      <div class="rating">★★★★★</div>
+    </div>
+</body>
+</html>
+
+{% endblock content%}

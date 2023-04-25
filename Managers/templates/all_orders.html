@@ -1,0 +1,40 @@
+{% extends  "layout.html" %}
+{%block content%}
+
+  <h1>All Orders</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>User</th>
+        <th>Address</th>
+        <th>Comment</th>
+        <th>Total Price</th>
+        <th>Is Delivered</th>
+        <th>Delivered At</th>
+        <th>Change Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for delivery in deliveries %}
+        <tr>
+          <td>{{ delivery.order_id_id }}</td>
+          <td>{{ delivery.order_id.user.username }}</td>
+          <td>{{ delivery.address }}</td>
+          <td>{{ delivery.comment }}</td>
+          <td>{{ delivery.total_price }}</td>
+          <td>{{ delivery.is_delivered }}</td>
+          <td>{{ delivery.created }}</td>
+          <td>
+            <form method="post" action="{% url 'all-orders' %}">
+              {% csrf_token %}
+              <input type="hidden" name="order_id" value="{{ delivery.order_id_id }}">
+              <button class="btn waves-effect waves-light" type="submit" name="is_delivered">Click Here To Confirm Delivery></button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock content %}
+

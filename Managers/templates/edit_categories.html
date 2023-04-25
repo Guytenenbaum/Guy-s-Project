@@ -1,0 +1,51 @@
+{% extends  "layout.html" %}
+{% block content %}
+<h1>Manage Categories</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for category in categories %}
+        <tr>
+          <td>{{ category.name }}</td>
+          <td>{{ category.image }}</td>
+          <td>
+            <form method="POST" action="{% url 'edit-categories'%}" name="delete">
+              {% csrf_token %}
+              <div>
+                <input type="hidden" name="delete" value="{{category.name}}">
+                <button type="submit">Delete</button>
+              </div>
+            </form>
+            <form method="POST" action="{% url 'edit-categories'%}">
+              {% csrf_token %}
+              <div>
+                <input type="hidden" name="edit" value="{{category.name}}">
+                <input type="text" name="new_name" placeholder="New name">
+                <input type="text" name="new_image" placeholder="New image">
+                <button type="submit">Edit</button>
+              </div>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <h2>Create Category</h2>
+  <form method="POST" action="{% url 'edit-categories' %}">
+    {% csrf_token %}
+    <input type="hidden" name="create" value="create">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <br>
+    <label for="image">Image:</label>
+    <input type="text" id="image" name="image" required>
+    <br>
+    <button type="submit">Create</button>
+  </form>
+{% endblock content%}

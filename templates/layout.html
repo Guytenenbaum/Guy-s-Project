@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'materialize.css' %}">
+    <script>
+      function added(quantity,dish_name) {
+        if (quantity>=1){
+          window.alert(`Succesfully added ${quantity} of ${dish_name} to your cart`);
+        }
+        else{
+          window.alert("please select a valid quantity (1 or more)")
+        }
+      }
+
+      var images = ["../static/images/pic1.jpg", "../static/images/pic2.jpg", "../static/images/pic3.jpg","../static/images/pic4.jpg"];
+      var currentIndex = 0
+      
+      setInterval(changeImage, 3000); 
+      
+      function changeImage() {
+        var image = document.getElementById("myImage");
+        currentIndex = (currentIndex + 1) % images.length; 
+        image.src = images[currentIndex];
+        }
+      
+    </script>
+    
+    <title>Document</title>
+</head>
+<body>
+  {%if user.is_authenticated%}
+  <nav class="nav-extended">
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo left" ><img width="80px" height="80px" src="..\static\images\resturant_logo.jpg"></a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+          <li><a href="{% url 'menu-page' %}">Menu</a></li>
+          <li><a href="{% url 'show-cart' %}">View Your Cart</a></li>
+          <li><a href="{% url 'order-history' %}">View Your Order History</a></li>
+          <li><a href="{% url 'main-page' %}">Back To Main Page</a></li>
+          <li><a href="{% url 'update-user' %}">Change User Details</a></li>
+          {%if user.is_staff%}
+          <li><a href="{% url 'edit-categories' %}">Edit Categories</a></li>
+          <li><a href="{% url 'edit-dishes' %}">Edit Dishes</a></li>
+          <li><a href="{% url 'all-orders' %}">Watch All Orders</a></li>
+          {%endif%}
+        </ul>
+      </div>
+  </nav>
+  {%else%}  
+    <nav class="nav-extended">
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo left" ><img width="70px" height="70px" src="..\static\images\resturant_logo.jpg"></a>
+          <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="{% url 'login' %}">Customer Login</a></li>
+            <li><a href="{% url 'signup' %}">Signup Here</a></li>
+            <li><a href="{% url 'main-page' %}">Main Page</a></li>
+            <li><a href="{% url 'manager-login' %}">Manager Login</a></li>
+          </ul>
+        </div>
+    </nav>
+      {%endif%}
+    {%block content%}
+
+    
+
+    {%endblock content%} 
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Our quality</h5>
+          <p class="grey-text text-lighten-4">One of the top 3 rated Restaurants on the planet.</p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Links</h5>
+          <ul>
+            <li><a class="grey-text text-lighten-3" href="{%url 'about' %}">about us</a></li>
+            <li><a class="grey-text text-lighten-3" href="{%url 'reviews' %}">customer reccomendetions </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright center">
+      <div class="container">
+      © since 2023 and forever
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

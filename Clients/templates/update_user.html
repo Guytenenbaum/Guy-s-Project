@@ -1,0 +1,43 @@
+{% extends  "layout.html" %}
+{% if not_valid_password %}
+    <script>
+        window.alert("Password doesn't match.")
+    </script>
+{% endif %}
+{% if username_is_taken %}
+    <script>
+        window.alert("Username is already taken.")
+    </script>
+{% endif %}
+{% block content %}
+    <form action="{% url 'update-user' %}" method="POST" novalidate>
+        {% csrf_token %}
+        <div>
+            {% for error in form.username.errors %}
+                <div>{{ error }}</div>
+            {% endfor %}
+            <h5>{{ form.username.label }}</h5>
+            {{ form.username }}
+        </div>
+        <div>
+            <h5>Email</h5>
+            <input id="email" name="email" type="email" class="validate" required>
+            <label for="email"></label>
+        </div>
+        <div>
+            {% for error in form.password1.errors %}
+                <div>{{ error }}</div>
+            {% endfor %}
+            <h5>{{ form.password1.label }}</h5>
+            {{ form.password1 }}
+        </div>
+        <div>
+            {% for error in form.password2.errors %}
+                <div>{{ error }}</div>
+            {% endfor %}
+            <h5>{{ form.password2.label }}</h5>
+            {{ form.password2 }}
+        </div>
+        <button type="submit">Update User Details</button>
+    </form>
+{% endblock content %}

@@ -1,0 +1,40 @@
+
+
+{% extends  "layout.html" %}
+{%block content%}
+<h1>Menu</h1>
+{%for category in categories%}
+<h2>{{category.name}} </h2>
+<img width="160px" height="160px" src="{{category.image}}">
+<div>
+  {% for dish in dishes %}
+    <div>
+      {%if category.id == dish.category.id %}
+        <form action="{% url 'menu-page' %}"  method="POST">
+         {% csrf_token %}
+        <input type="hidden" id="dish_id" name="dish_id" value="{{dish.id}}" ><h4>{{dish.name}}-{{dish.price}}$</h4>
+        <img width="120px" height="120px" src="{{dish.image}}">
+        <div>
+          {{dish.description}}
+          {%if dish.is_gluten_free%} 
+            <img width="40px" height="40px" src="..\static\images\gluten_free.png">
+          {%endif%} 
+          {%if dish.is_vegeterian%}
+            <img width="40px" height="40px" src="..\static\images\vegetarian.png">
+          {%endif%} 
+        </div>
+        <label for="quantity">Quantity:</label>
+        <input class="input-group-field" type="number" id="quantity" name="quantity"  value="1" min="1" style="width: 30px;">
+        <button type="submit" onclick="added(quantity.value,'{{dish.name}}')">add to cart</button>
+        </form>
+      {%endif%}
+    </div>
+  {% endfor %}
+</div>
+{% endfor %}
+  <li><a href="{% url 'show-cart' %}"><button type="submit">Go To Cart</button></a></li>
+</body>
+{%endblock content%}
+
+
+

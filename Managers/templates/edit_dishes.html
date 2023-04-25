@@ -1,0 +1,121 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Dishes Management</h2>
+
+<h3>Create Category</h3>
+
+<h3>Create Dish</h3>
+
+<form method="POST" action="{% url 'edit-dishes' %}" name="create">
+  {% csrf_token %}
+  <label for="name">Name:</label>
+  <div>
+    <input  type="text" id="name" name="name" required>
+  </div>
+  <label for="price">Price:</label>
+  <div>
+    <input type="number" id="price" min=1 name="price" required>
+  </div>
+  <label for="description">Description:</label>
+  <div>
+    <input type="text" id="description" name="description" required>
+  </div>
+  <label for="image">Image:</label>
+  <div>
+    <input type="text" id="image" name="image" required>
+  </div>
+  <p>
+    <label for="is_gluten_free">
+      <input type="checkbox" checked value="True" id="is_gluten_free" name="is_gluten_free"/>
+      <span>Is Gluten Free:</span>
+    </label>
+  </p>
+    <p>
+      <label for="is_vegeterian">
+        <input type="checkbox" checked value="True" id="is_vegeterian" name="is_vegeterian"/>
+        <span>Is Vegetarian:</span>
+      </label>
+    </p>
+  <div>
+    <label>Category</label>
+    <select class="browser-default" name="category">
+      <option value="" disabled selected>Choose Category</option>
+      {% for category in categories %}
+      <option value="{{ category.name }}">{{ category.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <button type="submit" name="create">Create</button>
+</form>
+
+<h3>Edit or Delete Dishes</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Description</th>
+      <th>Image</th>
+      <th>Is Gluten Free</th>
+      <th>Is Vegetarian</th>
+      <th>Category</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for dish in dishes %}
+    <tr>
+      <form method="POST" action="{% url 'edit-dishes' %}" name="edit" >
+        {% csrf_token %}
+            <input type="hidden" name="id" value="{{dish.id}}">
+            <td><input type="text" name="new_name" value="{{dish.name}}"></td>
+            <td><input type="number" min=1 name="new_price" value="{{dish.price}}"></td>
+            <td><input type="text" name="new_description" value="{{dish.description}}"></td>
+            <td><input type="text" name="new_image" value="{{dish.image}}"></td>
+            <td>
+            <p>
+                <label for="new_gluten_{{ dish.id }}">
+                <input type="checkbox"  value="True" id="new_gluten_{{ dish.id }}" name="new_gluten" {% if dish.is_gluten_free %}checked{% endif %}/>
+                <span>Is Gluten Free:</span>
+                </label>
+            </p>
+            </td>
+            <td>
+                <p>
+                    <label for="new_vegeterian_{{ dish.id }}">
+                    <input type="checkbox"  value="True" id="new_vegeterian_{{dish.id }}" name="new_vegeterian" {% if dish.is_vegeterian %}checked{% endif %}/>
+                    <span>Is Vegeterian:</span>
+                    </label>
+                </p>
+            </td>
+            <td>
+            <div>
+            <label>Category</label>
+            <select class="browser-default" name="new_category">
+            <option value="" disabled selected>{{dish.category}}</option>
+            {% for category in categories %}
+                    <option value="{{ category.name }}">{{category.name}} </option>
+            {% endfor %}
+            </select>
+            </div>
+            </td>
+            <td>
+            <button type="submit" name="edit">Save</button>
+        </form>
+        <form method="POST" action="{% url 'edit-dishes'%}" name="delete">
+            {% csrf_token %}
+            <div>
+              <input type="hidden" name="delete" value="{{dish.name}}">
+              <button type="submit">Delete</button>
+            </div>
+        </form>
+          </td>
+          </tr>
+    {% endfor %}
+            </tbody>
+          </table>
+{% endblock %}
+
+
+

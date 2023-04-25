@@ -1,0 +1,37 @@
+{% extends  "layout.html" %}
+{%block content%}
+<h2> Order Summary</h2>
+<table>
+   <thead>
+     <tr>
+         <th>Delivery ID</th>
+         <th>Time Of Order</th>
+         <th>Total Price</th>
+         <th>Has It Been Delivered Yet?</th>
+     </tr>
+   </thead>
+   <tbody>
+     <tr>
+       <td>{{new_delivery.order_id}}</td>
+       <td>{{new_delivery.created}}</td>
+       <td>{{new_delivery.total_price}} $</td>
+       {%if new_delivery.is_delivered%} 
+         <td>Yes!</td>
+       {%else%} 
+         <td>Not Yet But Soon ;)</td>
+       {%endif%}
+     </tr>
+   </tbody>
+</table>
+<form action="{% url 'order-summary' %}" method="POST">
+   {% csrf_token %}
+   <li>
+     <button type="submit" name="delivery_id" value="{{new_delivery.order_id}}">click here if you wish to change details</button>
+   </li>
+</form>
+{%endblock content%}
+
+
+
+
+

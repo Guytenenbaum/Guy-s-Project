@@ -1,0 +1,36 @@
+{% extends  "layout.html" %}
+{%block content%}
+<h5> order history</h5>
+
+<table>
+  <thead>
+    <tr>
+        <th>Order ID</th>
+        <th>Delivery Address</th>
+        <th>Special Requests</th>
+        <th>Total Price</th>
+        <th>When Was It Orderd</th>
+        <th>Has It Been Delivered Yet?</th>
+    </tr>
+  </thead>
+  <tbody>
+    {%for order in order_history%}
+      <form action="{% url 'order-history' %}"  method="POST">
+      <input type="hidden" id="dish" name="dish" value="{{item.dish.id}}">
+      {% csrf_token %}
+      <tr>
+          <td>{{order.order_id}}</td>
+          <td>{{order.address}}</td>
+          <td>{{order.comment}}</td>
+          <td>{{order.total_price}}$</td>
+          <td>{{order.created}}</td>
+          <td>{{order.is_delivered}}</td>
+          <td><button type="submit" name="order_id" value="{{order.order_id}}">Click Here If You Wish To Change Details</button></td>
+      </form>
+    {%endfor%}
+      </tr>
+  </tbody>
+</table>
+{%endblock content%}
+
+
