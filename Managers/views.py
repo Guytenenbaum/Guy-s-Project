@@ -9,7 +9,7 @@ from django.urls import reverse
 
 def manager_login(request):
     if request.user.is_authenticated and request.user.is_staff:
-        return redirect('/menu')
+        return redirect('menu-page')
     if request.method == "POST":
         user = authenticate(request,
                             username=request.POST['username'],
@@ -17,7 +17,7 @@ def manager_login(request):
                             )
         if user is not None and user.is_staff:
             login(request,user)
-            return render(request.path)
+            return render(request,"main.html")
         else:
             failed=True
             return render(request,'manager_login.html',{"failed":failed})
@@ -64,16 +64,14 @@ def edit_dishes(request):
             dish = Dish(name=name, price=price, description=description, image=image, is_gluten_free=is_gluten_free, is_vegeterian=is_vegeterian, category=category)
             dish.save()
         elif 'edit' in request.POST:
-            print("edit")
-            print(request.POST.get('edit'))
             dish_id = request.POST.get('id')
             dish = Dish.objects.get(id=dish_id)
             new_name = request.POST.get('new_name')
             new_price = request.POST.get('new_price')
             new_description = request.POST.get('new_description')
             new_image = request.POST.get('new_image')
-            new_gluten = request.POST.get('new_gluten')
-            new_vegeterian = request.POST.get('new_vegeterian')
+            new_gluten = request.POST.get('new_gluten',False)
+            new_vegeterian = request.POST.get('new_vegeterian',False)
             new_category_name = request.POST.get('new_category')
             new_category = Category.objects.get(name=new_category_name)
             dish.name = new_name
